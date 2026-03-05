@@ -24,8 +24,8 @@ const MyProfile = () => {
                 setResources(user.resources || []);
                 try {
                     const savesRes = await api.get('/users/me/saves');
-                    if (savesRes.data.success) {
-                        setSavedResources(savesRes.data.data.map(save => save.resource));
+                    if (savesRes.data?.success) {
+                        setSavedResources((savesRes.data?.data || []).map(save => save.resource));
                     }
                 } catch (error) {
                     console.error("Error fetching saved resources", error);
@@ -59,7 +59,7 @@ const MyProfile = () => {
         if (resourceToDelete) {
             try {
                 await api.delete(`/resources/${resourceToDelete}`);
-                setResources(resources.filter(r => r.id !== resourceToDelete));
+                setResources((resources || []).filter(r => r.id !== resourceToDelete));
             } catch (err) {
                 console.error(err);
                 alert('Error deleting resource');
@@ -75,8 +75,8 @@ const MyProfile = () => {
     };
 
     const handleUnsaveResource = async (id) => {
-        const previousSaved = [...savedResources];
-        setSavedResources(savedResources.filter(r => r.id !== id));
+        const previousSaved = [...(savedResources || [])];
+        setSavedResources((savedResources || []).filter(r => r.id !== id));
         try {
             await api.post(`/interactions/${id}/save`);
             toast.success("Resource unsaved");
@@ -227,7 +227,7 @@ const MyProfile = () => {
             <ShareResourceModal
                 isOpen={isShareModalOpen}
                 onClose={() => setIsShareModalOpen(false)}
-                onResourceAdded={(newRes) => setResources([...resources, newRes])}
+                onResourceAdded={(newRes) => setResources([...(resources || []), newRes])}
             />
 
             {/* Delete Confirmation Modal */}

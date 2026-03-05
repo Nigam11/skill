@@ -26,7 +26,7 @@ const SearchPage = () => {
                 } else {
                     res = await api.get(`/resources/search?title=${encodeURIComponent(query)}`);
                 }
-                setResources(res.data.data);
+                setResources(res.data?.data || []);
             } catch (error) {
                 console.error("Error fetching search results", error);
             }

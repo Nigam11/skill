@@ -21,7 +21,7 @@ const Dashboard = () => {
         const fetchResources = async () => {
             try {
                 const res = await api.get('/resources/search');
-                setResources(res.data.data);
+                setResources(res.data?.data || []);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching resources", error);
@@ -63,8 +63,8 @@ const Dashboard = () => {
         }
     };
 
-    const javaCourses = resources.filter(r => r.title.toLowerCase().includes('java') || r.description.toLowerCase().includes('java')).slice(0, 4);
-    const udemyCourses = resources.filter(r => r.platform.toLowerCase() === 'udemy').slice(0, 4);
+    const javaCourses = (resources || []).filter(r => r.title.toLowerCase().includes('java') || r.description.toLowerCase().includes('java')).slice(0, 4);
+    const udemyCourses = (resources || []).filter(r => r.platform.toLowerCase() === 'udemy').slice(0, 4);
 
     return (
         <div className="min-h-screen pt-24 px-6 max-w-7xl mx-auto animate-fade-in-up">
