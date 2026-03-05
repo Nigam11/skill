@@ -4,7 +4,7 @@ dotenv.config();
 
 const sequelize = process.env.DATABASE_URL
     ? new Sequelize(process.env.DATABASE_URL, {
-        dialect: 'mysql',
+        dialect: 'postgres',
         logging: false,
         dialectOptions: {
             ssl: {
@@ -19,7 +19,7 @@ const sequelize = process.env.DATABASE_URL
         process.env.DB_PASSWORD,
         {
             host: process.env.DB_HOST,
-            dialect: 'mysql',
+            dialect: 'postgres',
             logging: false,
         }
     );

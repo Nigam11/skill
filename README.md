@@ -12,7 +12,7 @@ SkillHub is a modern, responsive full-stack platform for users to share, discove
 
 ## 🛠 Tech Stack
 - **Frontend:** React (Vite), React Router DOM, TailwindCSS, React-Icons, Axios, React Hot Toast.
-- **Backend:** Node.js, Express, Sequelize (ORM), MySQL Database, Bearer JWT Auth.
+- **Backend:** Node.js, Express, Sequelize (ORM), PostgreSQL Database, Bearer JWT Auth.
 
 ---
 
@@ -20,10 +20,10 @@ SkillHub is a modern, responsive full-stack platform for users to share, discove
 
 ### Prerequisites
 - Node.js (v18+)
-- MySQL Database installed and running on your local machine.
+- PostgreSQL Database installed and running on your local machine.
 
 ### 1. Database Setup
-Create an empty MySQL schema on your machine.
+Create an empty PostgreSQL schema on your machine.
 ```sql
 CREATE DATABASE skillhub_db;
 ```
@@ -34,11 +34,11 @@ Navigate to the `backend` folder and install dependencies:
 cd backend
 npm install
 ```
-Create a `.env` file referencing your local MySQL configurations:
+Create a `.env` file referencing your local PostgreSQL configurations:
 ```env
 PORT=8080
 DB_HOST=localhost
-DB_USER=root
+DB_USER=postgres
 DB_PASSWORD=yourpassword
 DB_NAME=skillhub_db
 JWT_SECRET=yoursupersecretjwtkey
@@ -84,6 +84,6 @@ The backend container spins up using `npm start` natively via `server.js`. Link 
 ```env
 PORT=8080
 FRONTEND_URL=https://your-vercel-domain.vercel.app
-DATABASE_URL=mysql://user:pass@remotehost:3306/skillhub_db
+DATABASE_URL=postgres://user:pass@remotehost:5432/skillhub_db
 JWT_SECRET=your_production_secure_token
 ```
