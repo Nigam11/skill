@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --text-muted: #9ca3af;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(0, 0, 0, 0.2);
+}
+
+.light-theme {
+  --bg-color: #f3f4f6;
+  --text-color: #111827;
+  --text-muted: #4b5563;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --input-bg: rgba(255, 255, 255, 0.9);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    @apply font-sans antialiased transition-colors duration-500;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    @apply shadow-xl transition-colors duration-500;
+  }
+}
+
+/* Theme Fallbacks overriding Tailwind hardcoded utilities when in Light Theme */
+.light-theme .text-white {
+  color: var(--text-color) !important;
+}
+
+.light-theme .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.light-theme .text-gray-300 {
+  color: #374151 !important;
+}
+
+.light-theme .bg-black\/20 {
+  background-color: var(--input-bg) !important;
+}
+
+.light-theme .bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme .bg-brand-dark {
+  background-color: var(--bg-color) !important;
+}
+
+.light-theme .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-theme .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.light-theme .border-white\/30 {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-theme .shadow-brand-orange\/5 {
+  box-shadow: 0 4px 6px -1px rgba(255, 107, 0, 0.05) !important;
+}
