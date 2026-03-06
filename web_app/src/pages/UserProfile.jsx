@@ -84,9 +84,9 @@ const UserProfile = () => {
                     </h2>
                 </div>
 
-                {(user.resources || []).length > 0 ? (
+                {(Array.isArray(user.resources) ? user.resources : []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {(user.resources || []).map(resource => (
+                        {(Array.isArray(user.resources) ? user.resources : []).map(resource => (
                             <ResourceCard key={resource.id} resource={{ ...resource, owner: user }} />
                         ))}
                     </div>

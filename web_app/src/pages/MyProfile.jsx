@@ -25,7 +25,7 @@ const MyProfile = () => {
                 try {
                     const savesRes = await api.get('/users/me/saves');
                     if (savesRes.data?.success) {
-                        setSavedResources((savesRes.data?.data || []).map(save => save.resource));
+                        setSavedResources(Array.isArray(savesRes.data?.data) ? savesRes.data.data.map(save => save.resource) : []);
                     }
                 } catch (error) {
                     console.error("Error fetching saved resources", error);
@@ -59,7 +59,7 @@ const MyProfile = () => {
         if (resourceToDelete) {
             try {
                 await api.delete(`/resources/${resourceToDelete}`);
-                setResources((resources || []).filter(r => r.id !== resourceToDelete));
+                setResources(Array.isArray(resources) ? resources.filter(r => r.id !== resourceToDelete) : []);
             } catch (err) {
                 console.error(err);
                 alert('Error deleting resource');
@@ -76,7 +76,7 @@ const MyProfile = () => {
 
     const handleUnsaveResource = async (id) => {
         const previousSaved = [...(savedResources || [])];
-        setSavedResources((savedResources || []).filter(r => r.id !== id));
+        setSavedResources(Array.isArray(savedResources) ? savedResources.filter(r => r.id !== id) : []);
         try {
             await api.post(`/interactions/${id}/save`);
             toast.success("Resource unsaved");
@@ -161,9 +161,9 @@ const MyProfile = () => {
                     <div className="flex justify-center p-12">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
                     </div>
-                ) : (resources || []).length > 0 ? (
+                ) : (Array.isArray(resources) ? resources : []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {(resources || []).map(resource => (
+                        {(Array.isArray(resources) ? resources : []).map(resource => (
                             <div key={resource.id} className="relative group">
                                 <ResourceCard resource={{ ...resource, owner: user }} />
                                 <div className="absolute top-3 right-3 md:left-3 md:right-auto flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10">
@@ -201,9 +201,9 @@ const MyProfile = () => {
                     <div className="flex justify-center p-12">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
                     </div>
-                ) : (savedResources || []).length > 0 ? (
+                ) : (Array.isArray(savedResources) ? savedResources : []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {(savedResources || []).map(resource => (
+                        {(Array.isArray(savedResources) ? savedResources : []).map(resource => (
                             <div key={resource.id} className="relative group">
                                 <ResourceCard resource={resource} />
                                 <div className="absolute top-3 right-3 md:left-3 md:right-auto flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10">

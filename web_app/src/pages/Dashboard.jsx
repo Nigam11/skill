@@ -63,8 +63,8 @@ const Dashboard = () => {
         }
     };
 
-    const javaCourses = (resources || []).filter(r => r.title.toLowerCase().includes('java') || r.description.toLowerCase().includes('java')).slice(0, 4);
-    const udemyCourses = (resources || []).filter(r => r.platform.toLowerCase() === 'udemy').slice(0, 4);
+    const javaCourses = (Array.isArray(resources) ? resources : []).filter(r => r.title.toLowerCase().includes('java') || r.description.toLowerCase().includes('java')).slice(0, 4);
+    const udemyCourses = (Array.isArray(resources) ? resources : []).filter(r => r.platform.toLowerCase() === 'udemy').slice(0, 4);
 
     return (
         <div className="min-h-screen pt-24 px-6 max-w-7xl mx-auto animate-fade-in-up">
@@ -106,7 +106,7 @@ const Dashboard = () => {
                         />
 
                         {/* Live Dropdown */}
-                        {showSuggestions && (liveSuggestions || []).length > 0 && (
+                        {showSuggestions && (Array.isArray(liveSuggestions) ? liveSuggestions : []).length > 0 && (
                             <div className="absolute top-full mt-2 w-full glass bg-brand-dark/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50">
                                 {isSearching ? (
                                     <div className="p-4 text-center text-gray-400 flex items-center justify-center gap-2">
@@ -115,7 +115,7 @@ const Dashboard = () => {
                                     </div>
                                 ) : (
                                     <ul className="max-h-64 overflow-y-auto">
-                                        {(liveSuggestions || []).map((item) => (
+                                        {(Array.isArray(liveSuggestions) ? liveSuggestions : []).map((item) => (
                                             <li key={item.id}
                                                 className="px-4 py-3 hover:bg-white/10 border-b border-white/5 last:border-0 cursor-pointer transition-colors flex items-center gap-3"
                                                 onClick={() => {
@@ -135,7 +135,7 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {showSuggestions && !isSearching && (liveSuggestions || []).length === 0 && searchQuery.trim() && (
+                        {showSuggestions && !isSearching && (Array.isArray(liveSuggestions) ? liveSuggestions : []).length === 0 && searchQuery.trim() && (
                             <div className="absolute top-full mt-2 w-full glass bg-brand-dark/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl p-4 text-center text-gray-400 z-50">
                                 No results found.
                             </div>
