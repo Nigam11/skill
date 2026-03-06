@@ -26,9 +26,16 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const res = await api.post('/auth/login', { email, password });
-        localStorage.setItem('token', res.data.data.token);
-        const userRes = await api.get('/users/me');
-        setUser(userRes.data.data);
+
+        if (res.status === 200 && res.data?.success && res.data?.data?.token) {
+            localStorage.setItem('token', res.data.data.token);
+            const userRes = await api.get('/users/me');
+            if (userRes.status === 200 && userRes.data?.success) {
+                setUser(userRes.data.data);
+                return true;
+            }
+        }
+        throw new Error('Invalid response structure from server');
     };
 
     const register = async (name, email, password, whatsapp, linkedin) => {
