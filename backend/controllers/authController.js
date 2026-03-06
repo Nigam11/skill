@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id }, process.env.JWT_SECRET || 'fallback_super_secret_dev_key', {
         expiresIn: '30d',
     });
 };
@@ -54,9 +54,19 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        console.log("LOGIN ATTEMPT - Body received:", req.body);
         const user = await User.findOne({ where: { email } });
+        console.log("LOGIN DB SEARCH - User found:", user ? user.email : 'null');
 
-        if (user && (await bcrypt.compare(password, user.password))) {
+        if (!user) {
+            console.log("LOGIN FAILED - User not found.");
+            return res.status(401).json({ success: false, message: 'Invalid credentials: User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log("LOGIN BCRYPT - Password Match:", isMatch);
+
+        if (isMatch) {
             res.json({
                 success: true,
                 data: {
@@ -67,7 +77,8 @@ const login = async (req, res) => {
                 }
             });
         } else {
-            res.status(401).json({ success: false, message: 'Invalid credentials' });
+            console.log("LOGIN FAILED - Password Mismatch.");
+            res.status(401).json({ success: false, message: 'Invalid credentials: Password incorrect' });
         }
     } catch (error) {
         console.error(error);
