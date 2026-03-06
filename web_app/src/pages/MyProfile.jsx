@@ -161,9 +161,9 @@ const MyProfile = () => {
                     <div className="flex justify-center p-12">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
                     </div>
-                ) : resources.length > 0 ? (
+                ) : (resources || []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {resources.map(resource => (
+                        {(resources || []).map(resource => (
                             <div key={resource.id} className="relative group">
                                 <ResourceCard resource={{ ...resource, owner: user }} />
                                 <div className="absolute top-3 right-3 md:left-3 md:right-auto flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10">
@@ -201,9 +201,9 @@ const MyProfile = () => {
                     <div className="flex justify-center p-12">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
                     </div>
-                ) : savedResources.length > 0 ? (
+                ) : (savedResources || []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {savedResources.map(resource => (
+                        {(savedResources || []).map(resource => (
                             <div key={resource.id} className="relative group">
                                 <ResourceCard resource={resource} />
                                 <div className="absolute top-3 right-3 md:left-3 md:right-auto flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10">

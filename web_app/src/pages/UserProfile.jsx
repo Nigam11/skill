@@ -77,16 +77,16 @@ const UserProfile = () => {
             </div>
 
             <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="mb-8 border-b border-white/10 pb-4">
+                <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-4">
                     <h2 className="text-3xl font-bold text-white flex items-center gap-3">
                         <span className="w-1.5 h-8 bg-brand-orange rounded-full"></span>
                         Shared Resources
                     </h2>
                 </div>
 
-                {user.resources && user.resources.length > 0 ? (
+                {(user.resources || []).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {user.resources.map(resource => (
+                        {(user.resources || []).map(resource => (
                             <ResourceCard key={resource.id} resource={{ ...resource, owner: user }} />
                         ))}
                     </div>
